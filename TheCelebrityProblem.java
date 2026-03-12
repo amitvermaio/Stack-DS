@@ -7,26 +7,33 @@ public class TheCelebrityProblem {
     System.out.println(celebrity(arr));
   }
 
-  private static int celebrity(int[][] arr) {
-    int n = arr.length;
-    int i = 0;
-    int j = n - 1;
-
-    while (i < j) {
-      if (arr[i][j] == 1) {
-        i++;
+  static int celebrity(int mat[][]) {
+    int n = mat.length;
+    int top = 0, down = n - 1;
+    while (top < down) {
+      if (mat[top][down] == 1) {
+        top++;
       } else {
-        j--;
+        down--;
       }
     }
 
-    for (int k = 0; k < n; k++) {
-      if (k != i && (arr[i][k] == 1 || arr[k][i] == 0)) {
-        return -1;
+    int knows = 0, knownBy = 0;
+    for (int i = 0; i < n; i++) {
+      if (mat[i][top] == 1 && i != top) {
+        knownBy++;
       }
     }
 
-    return i;
+    for (int j = 0; j < n; j++) {
+      if (mat[top][j] == 1 & j != top) {
+        knows++;
+      }
+    }
+
+    if (knows == 0 && knownBy == n - 1)
+      return top;
+    return -1;
   }
 }
 
